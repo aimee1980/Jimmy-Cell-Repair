@@ -1,0 +1,12 @@
+{
+  "name": "jimmy-cell",
+  "version": "1.0.0",
+  "description": "cell-repair-site/\r ├── index.html\r ├── css/\r │   └── styles.css\r ├── assets/\r │   ├── labels/\r │   │   └── CanadaPost_Label_TEST.pdf\r │   └── images/\r │       └── qr_code.jpg     ← (Your iStock image)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
