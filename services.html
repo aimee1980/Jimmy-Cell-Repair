@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accessories | Jimmy's Cellphone Repair</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .service-card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .service-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .service-card .price {
+      color: green;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .service-card button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .service-card button:hover {
+      background-color: #45a049;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+   <div class="cart-button">
+  <a href="cart.html" title="View Cart">
+    <i class="fas fa-shopping-cart"></i> Cart
+  </a>
+</div>
+
+  <header>
+    <h1 style="text-align:center; margin-top: 20px;">📱 Phone Accessories</h1>
+  </header>
+
+  <main class="services-grid">
+    <div class="service-card">
+      <h3>Fast Charging Cable</h3>
+      <h3>17.99</h3>
+     <button onclick="addToCart('Fast Charging Cable', 17.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="service-card">
+      <h3>Charging Block (USB-C)</h3>
+      <h3>12.99</h3>
+     <button onclick="addToCart('Fast Charging Block', 12.99)">Add to Cart</button>
+
+
+    </div>
+
+    <div class="service-card">
+      <h3>Rugged Phone Case (OtterBox Style)</h3>
+      <h3>69.99</h3>
+     <button onclick="addToCart('phone case', 69.99)">Add to Cart</button> 
+    </div>
+
+    <div class="service-card">
+      <h3>Tempered Glass Screen Protector</h3>
+      <h3>12.99</h3>
+       <button onclick="addToCart('Protector, 12.99)">Add to Cart</button>
+    </div>
+
+    <div class="service-card">
+      <h3>Wireless Charging Pad</h3>
+     <h3>29.99</h3>
+      <button onclick="addToCart('Fast Charging pad', 12.99)">Add to Cart</button>
+    </div>
+
+    <div class="service-card">
+      <h3>Bluetooth Earbuds</h3>
+      <h3>49.99</h3>
+       <button onclick="addToCart('Fast Charging Block', 12.99)">Add to Cart</button>
+    </div>
+  </main>
+
+  <div class="back-link">
+    <a href="index.html" class="btn">⬅️ Back to Homepage</a>
+  </div>
+
+  <script>
+  function addToCart(name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({ id: Date.now(), name, price, quantity: 1 });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount(); // ✅ update badge immediately
+    alert(`${name} added to cart`);
+  }
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const countEl = document.getElementById('cart-count');
+    if (countEl) {
+      countEl.textContent = totalItems;
+      countEl.style.display = totalItems > 0 ? 'inline-block' : 'none';
+    }
+  }
+
+  // ✅ Always call on page load
+  document.addEventListener('DOMContentLoaded', updateCartCount);
+</script>
+
+
+</body>
+</html>

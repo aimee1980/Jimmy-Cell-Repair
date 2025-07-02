@@ -1,0 +1,9 @@
+cell-repair-site/
+├── index.html
+├── css/
+│   └── styles.css
+├── assets/
+│   ├── labels/
+│   │   └── CanadaPost_Label_TEST.pdf
+│   └── images/
+│       └── qr_code.jpg     ← (Your iStock image)

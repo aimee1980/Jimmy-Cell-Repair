@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Cart | Jimmy's Cellphone Repair</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+    
+    .cart-table th,
+    .cart-table td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+    
+    .cart-table th {
+      background-color: #f0f0f0;
+    }
+    
+    .checkout-buttons {
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .checkout-buttons .btn {
+      margin: 10px;
+    }
+    
+    .payment-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    
+    .payment-dropdown {
+      padding: 12px 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      min-width: 250px;
+      background-color: white;
+    }
+    
+    .proceed-btn {
+      padding: 12px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .proceed-btn:hover {
+      background-color: #45a049;
+    }
+    
+    .remove-btn {
+      color: #ff4444;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+    }
+    
+    .empty-cart {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: #666;
+    }
+    
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    
+    .quantity-btn {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      width: 25px;
+      height: 25px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛒 Your Shopping Cart</h1>
+  </header>
+
+  <main class="container">
+    <div id="empty-cart-message" class="empty-cart hidden">
+      <p>Your cart is empty</p>
+      <a href="index.html" class="btn">Browse Services</a>
+    </div>
+
+    <table id="cart-table" class="cart-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Subtotal</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+        <!-- Items will be added dynamically -->
+      </tbody>
+      <tfoot id="cart-totals">
+        <!-- Totals will be calculated dynamically -->
+      </tfoot>
+    </table>
+
+    <div class="payment-options">
+      <select class="payment-dropdown" onchange="handlePaymentSelection(this)">
+        <option value="" disabled selected>Select Payment Method</option>
+        <option value="etransfer">📧 Interac e-Transfer</option>
+        <option value="debit">💳 Debit Card</option>
+        <option value="visa">💳 Visa</option>
+        <option value="mastercard">💳 Mastercard</option>
+        <option value="paypal">🅿️ PayPal</option>
+      </select>
+      <button class="btn proceed-btn" onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+    <div style="text-align:center; margin-top: 20px;">
+  <button class="btn" onclick="clearCart()">🗑️ Clear Cart</button>
+</div>
+
+  </main>
+
+  <p style="text-align:center; margin-top: 20px;">
+    <a href="index.html" class="btn">⬅️ Back to Homepage</a>
+  </p>
+
+<!-- Load email config (must come first) -->
+<script src="config.js"></script>
+
+<!-- Main cart logic -->
+<script>
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const TAX_RATE = 0.13;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    renderCart();
+    updateCartCount();
+  });
+
+  function renderCart() {
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartTotalsEl = document.getElementById('cart-totals');
+    const emptyCartEl = document.getElementById('empty-cart-message');
+    const cartTableEl = document.getElementById('cart-table');
+    const paymentOptionsEl = document.querySelector('.payment-options');
+
+    cartItemsEl.innerHTML = '';
+
+    if (cart.length === 0) {
+      emptyCartEl.classList.remove('hidden');
+      cartTableEl.classList.add('hidden');
+      paymentOptionsEl.classList.add('hidden');
+      updateCartCount();
+      return;
+    } else {
+      emptyCartEl.classList.add('hidden');
+      cartTableEl.classList.remove('hidden');
+      paymentOptionsEl.classList.remove('hidden');
+    }
+
+    cart.forEach(item => {
+      const subtotal = item.price * item.quantity;
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>$${item.price.toFixed(2)}</td>
+        <td>
+          <div class="quantity-control">
+            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+            ${item.quantity}
+            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+          </div>
+        </td>
+        <td>$${subtotal.toFixed(2)}</td>
+        <td><button class="remove-btn" onclick="removeItem(${item.id})">✕</button></td>
+      `;
+      cartItemsEl.appendChild(row);
+    });
+
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const tax = subtotal * TAX_RATE;
+    const total = subtotal + tax;
+
+    cartTotalsEl.innerHTML = `
+      <tr>
+        <td colspan="3" style="text-align: right;">Subtotal</td>
+        <td>$${subtotal.toFixed(2)}</td>
+      </tr>
+      <tr>
+        <td colspan="3" style="text-align: right;">Tax (${(TAX_RATE * 100)}%)</td>
+        <td>$${tax.toFixed(2)}</td>
+      </tr>
+      <tr>
+        <td colspan="3" style="text-align: right;"><strong>Total</strong></td>
+        <td><strong>$${total.toFixed(2)}</strong></td>
+      </tr>
+    `;
+  }
+
+  function updateQuantity(id, change) {
+    const item = cart.find(item => item.id === id);
+    if (item) {
+      item.quantity += change;
+      if (item.quantity <= 0) {
+        cart = cart.filter(item => item.id !== id);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+      updateCartCount();
+    }
+  }
+
+  function removeItem(id) {
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+    updateCartCount();
+  }
+
+  function clearCart() {
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+    updateCartCount();
+  }
+
+  function calculateTotal() {
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return subtotal + (subtotal * TAX_RATE);
+  }
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const countEl = document.getElementById('cart-count');
+    if (countEl) {
+      countEl.textContent = totalItems;
+      countEl.style.display = totalItems > 0 ? 'inline-block' : 'none';
+    }
+  }
+
+  function handlePaymentSelection(select) {
+    console.log("Selected payment method:", select.value);
+  }
+
+  function saveTransaction(cart, total) {
+    const history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+
+    const newOrder = {
+      id: 'TX' + Date.now(),
+      date: new Date().toLocaleString(),
+      items: cart,
+      total: total,
+      trackingNumber: 'TRK' + Math.floor(Math.random() * 1000000),
+      status: 'Pending'
+    };
+
+    history.push(newOrder);
+    localStorage.setItem('orderHistory', JSON.stringify(history));
+    localStorage.removeItem('cart');
+  }
+
+  function proceedToPayment() {
+    const selectedMethod = document.querySelector('.payment-dropdown').value;
+    if (!selectedMethod) {
+      alert('Please select a payment method');
+      return;
+    }
+
+    const total = calculateTotal().toFixed(2);
+    saveTransaction(cart, parseFloat(total));
+
+    switch (selectedMethod) {
+      case 'etransfer':
+        alert(`To complete payment, send $${total} via Interac e-Transfer to ${ETRANSFER_EMAIL}`);
+        break;
+
+      case 'debit':
+      case 'visa':
+      case 'mastercard':
+        window.location.href = 'https://example.com/checkout'; // replace with real payment link
+        break;
+
+      case 'paypal':
+        window.location.href = 'https://www.paypal.com/paypalme/yourbusiness/$' + total;
+        break;
+
+      default:
+        alert('Payment method not supported.');
+    }
+  }
+</script>
+
+
+</body>
+</html>

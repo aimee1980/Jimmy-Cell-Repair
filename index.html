@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jimmy's Cellphone Repairs</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Add these new styles for the product display */
+    .product-section {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .product-display {
+      width: 300px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      background: #f9f9f9;
+      border-radius: 5px;
+    }
+    
+    .product-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .product-price {
+      font-size: 1.3rem;
+      color: #4CAF50;
+      margin-bottom: 15px;
+    }
+    
+    .add-to-cart {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    
+    .add-to-cart:hover {
+      background: #45a049;
+    }
+    
+    /* Existing styles */
+    .cart-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+    
+    .logo-container {
+      text-align: center;
+    }
+    
+    .logo {
+      font-size: 2rem;
+    }
+    
+    .tagline {
+      font-style: italic;
+      color: #666;
+    }
+    
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 15px;
+    }
+    
+    .hero-content {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    
+    .colored-section {
+      background-color: #f9f9f9;
+      padding: 30px;
+      border-radius: 10px;
+    }
+    
+    .services-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .testimonial {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>  
+<div class="cart-button">
+  <a href="cart.html" title="View Cart">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cart-count" class="cart-count">0</span>
+  </a>
+</div>
+
+    <!-- HEADER -->
+<header>
+  <nav>
+    <div class="logo-container">
+      <div class="logo">🔧🛡️📲  <H1>Jimmy's Cellphone Repair</div>
+      <div class="tagline">Fast & Reliable Device Repairs</div>
+    </div>
+    <div class="nav-links">
+      <a href="#services"><i class="fas fa-tools"></i> Services</a>
+      <a href="#testimonials"><i class="fas fa-star"></i> Reviews</a>
+      <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+      <a href="#contact"><i class="fas fa-phone-alt"></i> Contact</a>
+    </div>
+  </nav>
+</header>
+  
+
+  <!-- HERO SECTION -->
+  <section id="hero">
+    <div class="hero-content">
+      <h1>Need a Quick Fix?</h1>
+      <p>Cracked screens, battery swaps, water damage and more.</p>
+      <a href="#contact" class="btn">Book a Repair</a>
+    </div>
+  </section>
+
+<section id="mail-in" class="container colored-section">
+  <div class="product-section">
+    <div class="qr-container">
+      <h2>📦 Mail-In Repairs</h2>
+      <p>
+        Prefer to mail your device? You can now print a Canada Post shipping label and send your phone directly to us!
+      </p>
+
+      <!-- Updated button -->
+      <a href="mail.html" class="btn">🖨️ Print Mail-In Label</a>
+
+      <div class="qr-left">
+        <!-- Updated QR code link -->
+        <a href="mail.html">
+          <img src="assets/images/qr.jpg" alt="Mail-In Label QR Code" class="qr-img" />
+        </a>
+        <p style="font-size: 0.9em;">click the QR code to access your shipping label.</p>
+      </div>
+
+      <br><br>
+     <table>
+      <div class="qr-right">
+        <div class="placeholder-img">
+            <img src="assets/images/phone.jpg" alt="Phone Repairs Example" class="placeholder-img" /></div>
+      
+        <div class="placeholder-img">
+           <img src="assets/images/phones.jpg" alt="Phone Repairs Example" class="placeholder-img" /></div>
+        </div>
+      </div>
+    <br>
+      <div class="qr-left">
+        <div class="placeholder-img"> <img src="assets/images/phoneI.jpg" alt="Phone Repairs Example" class="placeholder-img" /></div></div>
+       <br>
+        <div class="placeholder-img">
+           <img src="assets/images/fone.jpg" alt="Phone Repairs Example" class="placeholder-img" /></div></div>
+          </div>
+      </div>
+    </div>
+  </table>
+  
+  
+
+
+  <!-- SERVICES -->
+  <section id="services" class="container colored-section">
+    <h2>Our Services</h2>
+    <ul class="services-list">
+      <li><i class="fas fa-mobile-alt"></i> Screen Replacement</li>
+      <li><i class="fas fa-battery-three-quarters"></i> Battery Swaps</li>
+      <li><i class="fas fa-water"></i> Water Damage Recovery</li>
+      <li><i class="fas fa-tablet-alt"></i> Tablet Repairs</li>
+      <li><i class="fas fa-charging-station"></i> Charging Port Repair</li>
+    <div style="text-align: center; margin: 40px 0;">
+  <a href="services.html" class="btn">📦 View Additional Services</a>
+</div>
+
+    </ul>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="container">
+    <h2>About JIMMY'S CELLPHONE REPAIR</h2>
+    <p>With over 5 years of experience, FixIt Mobile Repairs is trusted by hundreds for fast, honest, and affordable phone repairs in your neighborhood.</p>
+  </section>
+
+  <!-- CONTACT FORM (like your portfolio) -->
+ <section id="contact" class="container colored-section">
+  <h2>Contact Us</h2>
+  <form class="contact-form" action="https://formspree.io/f/myzjoqwl" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <input type="text" name="subject" placeholder="Subject" />
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button type="submit" class="btn">Send Message</button>
+  </form>
+</section>
+
+  </section>
+
+  <!-- TESTIMONIALS -->
+<section id="testimonials" class="container">
+  <h2>What Our Customers Say</h2>
+  <div class="testimonial-grid">
+    <div class="testimonial">
+      <div class="testimonial-content">
+        <i class="fas fa-quote-left"></i>
+        <p>Fixed my cracked screen in under an hour while I waited!</p>
+        <i class="fas fa-quote-right"></i>
+      </div>
+      <div class="testimonial-author">- Sarah J.</div>
+    </div>
+    
+    <div class="testimonial">
+      <div class="testimonial-content">
+        <i class="fas fa-quote-left"></i>
+        <p>Recovered all my data after water damage. Lifesaver!</p>
+        <i class="fas fa-quote-right"></i>
+      </div>
+      <div class="testimonial-author">- Michael T.</div>
+    </div>
+    
+    <div class="testimonial">
+      <div class="testimonial-content">
+        <i class="fas fa-quote-left"></i>
+        <p>Best prices in town and honest diagnostics. Highly recommend!</p>
+        <i class="fas fa-quote-right"></i>
+      </div>
+      <div class="testimonial-author">- Lisa M.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Updated footer with correct Facebook link -->
+<footer>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/profile.php?id=100087367552734" target="_blank" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i> Visit Us on Facebook
+    </a>
+  </div>
+  <p>&copy; 2025 Jimmy's CellPhone Repairs. All rights reserved.</p>
+</footer>
+
+<script>
+  function addToCart(name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({ id: Date.now(), name, price, quantity: 1 });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount(); // ✅ update badge immediately
+    alert(`${name} added to cart`);
+  }
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const countEl = document.getElementById('cart-count');
+    if (countEl) {
+      countEl.textContent = totalItems;
+      countEl.style.display = totalItems > 0 ? 'inline-block' : 'none';
+    }
+  }
+
+  // ✅ Always call on page load
+  document.addEventListener('DOMContentLoaded', updateCartCount);
+</script>
+
+
+</body>
+</html>
